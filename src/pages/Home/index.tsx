@@ -1,5 +1,12 @@
 import { BsHeadphones, BsSoundwave, BsFillPlayFill } from 'react-icons/bs';
 import { BiHistory } from 'react-icons/bi';
+
+import User from '../../img/Casimiro.jpg';
+import PodCast1 from '../../img/nerdcast.jfif';
+import PodCast2 from '../../img/podpah.jfif';
+import PodCast3 from  '../../img/flow.png';
+import Audio1 from  '../../img/download.jfif';
+
 export function Home() {
     return (
         <div className="flex flex-row">
@@ -7,7 +14,7 @@ export function Home() {
             <div className="p-2 h-screen w-24 shadow-lg shadow-[#771A0F] flex flex-col items-center gap-2">
                 <div className="h-[72px] w-[72px] shadow-lg p-1 bg-gray-200 hover:bg-gray-100  flex flex-col justify-center items-center text-sm rounded-md mb-2
                  transition ease-in-out">
-                    <div className="rounded-full h-10 w-10 bg-black"></div>
+                    <img className="rounded-full h-10 w-10 bg-black" src={User}></img>
                     Teste
                 </div>
                 <hr className="w-[72px]  border border-rose-200"></hr>
@@ -17,16 +24,16 @@ export function Home() {
                         <BsHeadphones size="24px"></BsHeadphones>
                     </div>
 
-                    <div className='h-16 w-16 bg-orange-600 rounded-md'></div>
-                    <div className='h-16 w-16 bg-orange-600 rounded-md'></div>
-                    <div className='h-16 w-16 bg-orange-600 rounded-md'></div>
+                    <img src={PodCast1} className='h-16 w-16 bg-orange-600 rounded-md'></img>
+                    <img src={PodCast2} className='h-16 w-16 bg-orange-600 rounded-md'></img>
+                    <img src={PodCast3} className='h-16 w-16 bg-orange-600 rounded-md'></img>
                 </div>
                 <div className="w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
                 transition ease-in-out">
                     <div className='h-[72px] flex items-center justify-center'>
                         <BsSoundwave size="24px"></BsSoundwave>
                     </div>
-                    <div className='h-16 w-16 bg-orange-600 rounded-md'></div>
+                    <img src={Audio1} className='h-16 w-16 bg-orange-600 rounded-md'></img>
                 </div>
                 <div className="w-[72px] shadow-lg text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
                 transition ease-in-out">
@@ -38,7 +45,7 @@ export function Home() {
             {/* CONTAINER */}
             <div className="w-full p-6">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4">
-                    <div className='h-80 w-80 bg-orange-500 rounded-lg shadow-md'></div>
+                    <img src={PodCast1} className='h-80 w-80 bg-orange-500 rounded-lg shadow-md'></img>
                     <div className='flex flex-row gap-2'>
                         <div className='w-[500px] h-10 p-6 bg-gray-200 shadow-md rounded-full flex items-center'>
                             <div className='cursor-pointer'>
