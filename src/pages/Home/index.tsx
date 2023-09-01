@@ -7,6 +7,8 @@ import PodCast2 from '../../img/podpah.jfif';
 import PodCast3 from '../../img/flow.png';
 import Audio1 from '../../img/download.jfif';
 
+import { Box } from '../../components/Box'
+
 import { Tooltip } from 'antd';
 
 export function Home() {
@@ -72,7 +74,10 @@ export function Home() {
             {/* CONTAINER */}
             <div className="w-full p-6">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4">
-                    <h1 className='text-4xl font-black text-zinc-700 drop-shadow-md'>NerdCast</h1>
+                    <h1 className='text-4xl font-black text-zinc-700 drop-shadow-md'>
+                        NerdCast
+                    </h1>
+                    <Box></Box>
                     <img src={PodCast1} className='h-80 w-80 bg-orange-500 rounded-lg shadow-md'></img>
                     <div className='flex flex-row gap-2'>
                         <div className='w-[500px] h-10 p-6 bg-gray-200 shadow-md rounded-full flex items-center'>
