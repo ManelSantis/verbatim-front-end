@@ -81,8 +81,79 @@ export function Home() {
                         </div>
                         <button className='w-24 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</button>
                     </div>
-                    <div className='w-[596px] h-60 overflow-y-auto cursor-default p-6 border'>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget hendrerit sapien. Integer aliquet lacinia pellentesque. Quisque risus ex, fringilla in leo vel, semper eleifend est. Fusce at sagittis libero. Nullam vestibulum, nulla sed eleifend viverra, tellus turpis volutpat ipsum, at faucibus purus sapien sed metus. Sed sapien elit, cursus vel condimentum nec, consectetur et libero. Duis id velit accumsan, rutrum leo et, lacinia enim. Etiam ac ipsum lobortis, tempor lorem id, gravida nisl. Nulla euismod, turpis ac laoreet maximus, nulla augue elementum odio, nec mollis turpis est in erat. Quisque in neque quis nisl tincidunt lacinia a eget erat. Donec facilisis pretium justo in pellentesque. Morbi eu porta velit. Nulla lobortis luctus pulvinar.
+                    <div className='w-[596px] h-60 overflow-y-auto cursor-default p-6 border flex flex-wrap'>
+                        <Tooltip title="00:01" placement='top'>
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                                Lorem ipsum dolor sit amet,
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="00:10">
+
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                                consectetur adipiscing elit.
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="00:15">
+
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                                Mauris eget hendrerit
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="00:17">
+
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                                sapien.
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="00:19">
+
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                                Integer aliquet lacinia pellentesque.
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="00:22">
+
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                                Quisque risus ex, fringilla in leo vel,
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="00:28">
+
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                                semper
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="00:29">
+
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                                 eleifend est.
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="00:32">
+
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                              Fusce at sagittis libero.
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="00:35">
+
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                                Nullam vestibulum, nulla sed eleifend viverra,
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="00:40">
+
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                                tellus turpis volutpat ipsum,
+                            </div>
+                        </Tooltip>
+                        <Tooltip title="00:39">
+
+                            <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-bold hover:px-1   transition ease-in-out'>
+                                Sed sapien elit, cursus vel condimentum nec,
+                            </div>
+                        </Tooltip>
+                        consectetur et libero. Duis id velit accumsan, rutrum leo et, lacinia enim. Etiam ac ipsum lobortis, tempor lorem id, gravida nisl. Nulla euismod, turpis ac laoreet maximus, nulla augue elementum odio, nec mollis turpis est in erat. Quisque in neque quis nisl tincidunt lacinia a eget erat. Donec facilisis pretium justo in pellentesque. Morbi eu porta velit. Nulla lobortis luctus pulvinar.
                     </div>
                 </div>
             </div>
