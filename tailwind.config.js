@@ -3,12 +3,21 @@ export default {
   content: ["./src/**/*.tsx"],
   theme: {
     extend: {
-      screens:{
+      screens: {
         'sm': '300px'
       },
-      fontFamily:{
+      fontFamily: {
+        'poppins': ["Poppins"],
+        'inter': ["Inter"],
         'jomhuria': ['Jomhuria'],
         'jockey-one': ['Jockey One']
+      },
+      colors: {
+        "light-red": '#f52c15',
+        "medium-red": '#d32110',
+        "vivid-red": '#b1160b',
+        "dark-red": '#900b05',
+        "really-dark-red": '#6e0000'
       }
     },
   },

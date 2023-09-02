@@ -72,9 +72,9 @@ export function Home() {
                 </div>
             </div>
             {/* CONTAINER */}
-            <div className="w-full p-6">
+            <div className="w-full p-6 ">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4">
-                    <h1 className='text-4xl font-black text-zinc-700 drop-shadow-md'>
+                    <h1 className='text-4xl font-black text-zinc-700 drop-shadow-md font-poppins'>
                         NerdCast
                     </h1>
                     <Box></Box>

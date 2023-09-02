@@ -16,6 +16,7 @@ export function Login() {
                     <a href="#" className="font-semibold mx-1 text-[#F52C15] hover:underline transition ease-in-out">Sign in</a>
                 </div>
                 <Button type="primary" className="w-full my-2" >Login</Button>
+               
             </div>
         </div>
     )
