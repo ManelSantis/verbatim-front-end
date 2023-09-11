@@ -1,5 +1,5 @@
 import { BsHeadphones, BsSoundwave, BsFillPlayFill } from 'react-icons/bs';
-import { BiHistory } from 'react-icons/bi';
+import { BiHistory, BiExit } from 'react-icons/bi';
 
 import User from '../../img/Casimiro.jpg';
 import PodCast1 from '../../img/nerdcast.jfif';
@@ -7,11 +7,19 @@ import PodCast2 from '../../img/podpah.jfif';
 import PodCast3 from '../../img/flow.png';
 import Audio1 from '../../img/download.jfif';
 
+import { useNavigate } from 'react-router-dom';
+
 import { Box } from '../../components/Box'
 
 import { Tooltip } from 'antd';
 
 export function Home() {
+    const navigate = useNavigate();
+
+    function handleExit(){
+        navigate("/login")
+    }
+
     return (
         <div className="flex flex-row">
             {/* SIDEBAR */}
@@ -70,6 +78,14 @@ export function Home() {
                         </div>
                     </Tooltip>
                 </div>
+                <Tooltip title="Exit" placement='right'>
+                    <div className='absolute bottom-2 text-really-dark-red hover:bg-gray-200 w-[72px] rounded-md hover:shadow-lg transition ease-in-out' onClick={handleExit}>
+
+                        <div className='h-[72px] flex items-center justify-center'>
+                            <BiExit size="24px"></BiExit>
+                        </div>
+                    </div>
+                </Tooltip>
             </div>
             {/* CONTAINER */}
             <div className="w-full p-6 ">
