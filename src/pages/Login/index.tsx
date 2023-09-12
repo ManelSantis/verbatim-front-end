@@ -2,7 +2,7 @@ import { Button } from "@mui/material"
 import { Input } from "antd"
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import VerbatiLogo from "../../img/Vectorverbatim_logo.svg"
 import Svg1 from "../../img/Groupdesk.svg";
 import Svg2 from "../../img/8. order-completed.svg";
@@ -30,7 +30,7 @@ export function Login() {
                 <Input.Password size="large" id="Password" placeholder="Password" />
                 <div className="w-full mb-2 text-right text-white">
                     Not registered?
-                    <a href="#" className="font-semibold mx-1 text-light-red hover:text-really-dark-red transition ease-in-out">Sign in</a>
+                    <Link to="/auth/register" className="font-semibold mx-1 text-light-red hover:text-really-dark-red transition ease-in-out">Sign in</Link>
                 </div>
                 <div className="gap-2 flex flex-col">
                     <Button className="" variant="contained" onClick={handleLogin}>Login</Button>

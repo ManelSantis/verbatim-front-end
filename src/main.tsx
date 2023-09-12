@@ -5,6 +5,7 @@ import App from './App';
 import { Home } from "./pages/Home"
 import { Login } from './pages/Login'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import UserRegister from './pages/UserRegister/UserRegister.tsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home />,
+  },
+  {
+    path: "/auth/register",
+    element: <UserRegister/>,
   },
 
 ]);
