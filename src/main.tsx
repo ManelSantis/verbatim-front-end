@@ -8,11 +8,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UserRegister from './pages/UserRegister/UserRegister.tsx';
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/oldAPp",
     element: <App />,
   },
   {
     path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/",
     element: <Login />,
   },
   {
