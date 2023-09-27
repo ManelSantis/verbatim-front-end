@@ -22,7 +22,7 @@ export function Home() {
     }
 
     return (
-        <div className="flex flex-row">
+        <div className="flex flex-row bg-slate-300">
             {/* SIDEBAR */}
             {/* <div className="p-2 h-screen w-24 shadow-lg shadow-[#771A0F] flex flex-col items-center gap-2">
                 <Tooltip title="My Account" placement='right'>
@@ -91,7 +91,7 @@ export function Home() {
             <SideBar/>
             {/* CONTAINER */}
             <div className="w-full p-6 ">
-                <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4">
+                <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4 bg-white">
                     <h1 className='text-4xl font-black text-zinc-700 drop-shadow-md font-poppins'>
                         NerdCast
                     </h1>

@@ -31,99 +31,104 @@ export default function SideBar() {
     };
 
 
-    return <div className="p-2 h-screen w-24 shadow-lg shadow-[#771A0F] flex flex-col items-center gap-2">
-        <Tooltip title="My Account" placement='right'>
+    return (
+        <div className="p-2 h-screen w-24 shadow-lg shadow-[#771A0F] flex flex-col items-center gap-2 bg-white">
+            <Tooltip title="My Account" placement='right'>
 
-            <div className="h-[72px] w-[72px] shadow-lg p-1 bg-gray-200 hover:bg-gray-100  flex flex-col justify-center items-center text-sm rounded-md mb-2
+                <div className="h-[72px] w-[72px] shadow-lg p-1 bg-gray-200 hover:bg-gray-100  flex flex-col justify-center items-center text-sm rounded-md mb-2
      transition ease-in-out">
-                <img className="rounded-full h-10 w-10 bg-black" src={User}></img>
-                <label className='font-semibold'>
-                    Me
-                </label>
+                    <img className="rounded-full h-10 w-10 bg-black" src={User}></img>
+                    <label className='font-semibold'>
+                        Me
+                    </label>
+                </div>
+            </Tooltip>
+            <hr className="w-[72px]  border border-rose-200"></hr>
+            <div className="w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2 
+    transition ease-in-out">
+                <Tooltip title="Podcasts" placement='right'>
+                    <div className='h-[72px] flex items-center justify-center'>
+                        <BsHeadphones size="24px"></BsHeadphones>
+                    </div>
+                </Tooltip>
+
+                <Tooltip title="NerdCast" placement='right'>
+                    <img src={PodCast1} className='h-16 w-16 bg-orange-600 rounded-md'></img>
+
+                </Tooltip>
+                <Tooltip title="PodPah" placement='right'>
+                    <img src={PodCast2} className='h-16 w-16 bg-orange-600 rounded-md'></img>
+
+                </Tooltip>
+                <Tooltip title="Flow" placement='right'>
+                    <img src={PodCast3} className='h-16 w-16 bg-orange-600 rounded-md'></img>
+
+                </Tooltip>
+
             </div>
-        </Tooltip>
-        <hr className="w-[72px]  border border-rose-200"></hr>
-        <div className="w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2 
+            <div className="w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
     transition ease-in-out">
-            <Tooltip title="Podcasts" placement='right'>
-                <div className='h-[72px] flex items-center justify-center'>
-                    <BsHeadphones size="24px"></BsHeadphones>
-                </div>
-            </Tooltip>
+                <Tooltip title="Audios" placement='right'>
+                    <div className='h-[72px] flex items-center justify-center'>
+                        <BsSoundwave size="24px"></BsSoundwave>
+                    </div>
 
-            <Tooltip title="NerdCast" placement='right'>
-                <img src={PodCast1} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-
-            </Tooltip>
-            <Tooltip title="PodPah" placement='right'>
-                <img src={PodCast2} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-
-            </Tooltip>
-            <Tooltip title="Flow" placement='right'>
-                <img src={PodCast3} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-
-            </Tooltip>
-
-        </div>
-        <div className="w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
+                </Tooltip>
+                <Tooltip title="A7F" placement='right'>
+                    <img src={Audio1} className='h-16 w-16 bg-orange-600 rounded-md'></img>
+                </Tooltip>
+            </div>
+            <div className="w-[72px] shadow-lg text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
     transition ease-in-out">
-            <Tooltip title="Audios" placement='right'>
-                <div className='h-[72px] flex items-center justify-center'>
-                    <BsSoundwave size="24px"></BsSoundwave>
-                </div>
+                <Tooltip title="History" placement='right'>
 
-            </Tooltip>
-            <Tooltip title="A7F" placement='right'>
-                <img src={Audio1} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-            </Tooltip>
-        </div>
-        <div className="w-[72px] shadow-lg text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
-    transition ease-in-out">
-            <Tooltip title="History" placement='right'>
-
-                <div className='h-[72px] flex items-center justify-center'>
-                    <BiHistory size="24px"></BiHistory>
-                </div>
-            </Tooltip>
-        </div>
-        <Tooltip title="Menu" placement='right'>
-            {/* <div className='absolute bottom-2 text-really-dark-red hover:bg-gray-200 w-[72px] rounded-md hover:shadow-lg transition ease-in-out' onClick={handleExit}>
+                    <div className='h-[72px] flex items-center justify-center'>
+                        <BiHistory size="24px"></BiHistory>
+                    </div>
+                </Tooltip>
+            </div>
+            <Tooltip title="Menu" placement='right'>
+                {/* <div className='absolute bottom-2 text-really-dark-red hover:bg-gray-200 w-[72px] rounded-md hover:shadow-lg transition ease-in-out' onClick={handleExit}>
 
                 <div className='h-[72px] flex items-center justify-center'>
                     <BiExit size="24px"></BiExit>
                 </div>
             </div> */}
-            <div className='absolute bottom-4 text-really-dark-red'>
-                <IconButton
-                    id="demo-positioned-button"
-                    className='flex items-center justify-center'
-                    aria-controls={open ? 'demo-positioned-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                >
-                    <GiHamburgerMenu />
-                </IconButton>
-                <Menu
-                    id="demo-positioned-menu"
-                    aria-labelledby="demo-positioned-button"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                >
-                    <MenuItem onClick={handleClose}>My Verbs</MenuItem>
-                    {/* <MenuItem onClick={handleClose}>My accoun</MenuItem> */}
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </Menu>
-            </div>
-        </Tooltip>
-    </div>
+                <div className='absolute bottom-4 text-really-dark-red'>
+                    <IconButton
+                        id="demo-positioned-button"
+                        className='flex items-center justify-center'
+                        aria-controls={open ? 'demo-positioned-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick}
+                    >
+                        <GiHamburgerMenu />
+                    </IconButton>
+                    <Menu
+                        id="demo-positioned-menu"
+                        aria-labelledby="demo-positioned-button"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                    >
+                        <MenuItem onClick={handleClose}>My Verbs</MenuItem>
+                        {/* <MenuItem onClick={handleClose}>My accoun</MenuItem> */}
+                        <MenuItem onClick={handleExit}>
+                            <BiExit className=" w-10 font-bold"/>
+                            Logout
+                        </MenuItem>
+                    </Menu>
+                </div>
+            </Tooltip>
+        </div>
+    )
 }
