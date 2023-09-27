@@ -95,7 +95,7 @@ export function Home() {
                     <h1 className='text-4xl font-black text-zinc-700 drop-shadow-md font-poppins'>
                         NerdCast
                     </h1>
-                    <Box></Box>
+                    {/* <Box></Box> */}
                     <img src={PodCast1} className='h-80 w-80 bg-orange-500 rounded-lg shadow-md'></img>
                     <div className='flex flex-row gap-2'>
                         <div className='w-[500px] h-10 p-6 bg-gray-200 shadow-md rounded-full flex items-center'>
