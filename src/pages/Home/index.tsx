@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box } from '../../components/Box'
 
 import { Tooltip } from 'antd';
+import SideBar from '../../components/SideBar';
 
 export function Home() {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ export function Home() {
     return (
         <div className="flex flex-row">
             {/* SIDEBAR */}
-            <div className="p-2 h-screen w-24 shadow-lg shadow-[#771A0F] flex flex-col items-center gap-2">
+            {/* <div className="p-2 h-screen w-24 shadow-lg shadow-[#771A0F] flex flex-col items-center gap-2">
                 <Tooltip title="My Account" placement='right'>
 
                     <div className="h-[72px] w-[72px] shadow-lg p-1 bg-gray-200 hover:bg-gray-100  flex flex-col justify-center items-center text-sm rounded-md mb-2
@@ -86,7 +87,8 @@ export function Home() {
                         </div>
                     </div>
                 </Tooltip>
-            </div>
+            </div> */}
+            <SideBar/>
             {/* CONTAINER */}
             <div className="w-full p-6 ">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4">
