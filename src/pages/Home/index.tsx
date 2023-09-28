@@ -1,94 +1,63 @@
-import { BsHeadphones, BsSoundwave, BsFillPlayFill } from 'react-icons/bs';
-import { BiHistory, BiExit } from 'react-icons/bi';
+import { BsFillPlayFill } from 'react-icons/bs';
 
-import User from '../../img/Casimiro.jpg';
+
 import PodCast1 from '../../img/nerdcast.jfif';
-import PodCast2 from '../../img/podpah.jfif';
-import PodCast3 from '../../img/flow.png';
-import Audio1 from '../../img/download.jfif';
 
 import { useNavigate } from 'react-router-dom';
+import { FirebaseStorage, getDownloadURL, getStorage, uploadBytes, uploadBytesResumable } from "firebase/storage";
 
-import { Box } from '../../components/Box'
-
+import app, { uploadData } from '../../utils/firebase'
 import { Tooltip } from 'antd';
 import SideBar from '../../components/SideBar';
+import { ChangeEvent, useState } from 'react';
+import { Button } from '@mui/material';
 
 export function Home() {
     const navigate = useNavigate();
 
-    function handleExit(){
+    function handleExit() {
         navigate("/login")
     }
-
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [fileUrl,setFileUrl] = useState<string|undefined>("");
+    const [disabled, setDisabled] = useState(false)
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        setSelectedFile(file || null);
+    };
+    
+    // const handleUpload = () => {
+    //     if (selectedFile) {
+    //         // Faça algo com o arquivo, como enviá-lo para o servidor
+    //         console.log('Arquivo selecionado:', selectedFile.name);
+    //     }
+    // };
+    const handleUpload = async (e: { preventDefault: () => void }) => {
+        e.preventDefault();
+        setDisabled(true);
+        
+        if (selectedFile) {
+         
+          const res = await uploadData(
+           
+            selectedFile, 
+            selectedFile.name
+          );
+          
+          if (res && selectedFile) {
+            setDisabled(false);
+            setSelectedFile(null);
+            
+            // Clear the file upload value.
+            //selectedFile.value = '';
+          }
+          setFileUrl(res);
+        }
+      }
     return (
-        <div className="flex flex-row bg-slate-300">
+        <div className="flex flex-row ">
             {/* SIDEBAR */}
-            {/* <div className="p-2 h-screen w-24 shadow-lg shadow-[#771A0F] flex flex-col items-center gap-2">
-                <Tooltip title="My Account" placement='right'>
-
-                    <div className="h-[72px] w-[72px] shadow-lg p-1 bg-gray-200 hover:bg-gray-100  flex flex-col justify-center items-center text-sm rounded-md mb-2
-                 transition ease-in-out">
-                        <img className="rounded-full h-10 w-10 bg-black" src={User}></img>
-                        <label className='font-semibold'>
-                            Me
-                        </label>
-                    </div>
-                </Tooltip>
-                <hr className="w-[72px]  border border-rose-200"></hr>
-                <div className="w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2 
-                transition ease-in-out">
-                    <Tooltip title="Podcasts" placement='right'>
-                        <div className='h-[72px] flex items-center justify-center'>
-                            <BsHeadphones size="24px"></BsHeadphones>
-                        </div>
-                    </Tooltip>
-
-                    <Tooltip title="NerdCast" placement='right'>
-                        <img src={PodCast1} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-
-                    </Tooltip>
-                    <Tooltip title="PodPah" placement='right'>
-                        <img src={PodCast2} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-
-                    </Tooltip>
-                    <Tooltip title="Flow" placement='right'>
-                        <img src={PodCast3} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-
-                    </Tooltip>
-
-                </div>
-                <div className="w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
-                transition ease-in-out">
-                    <Tooltip title="Audios" placement='right'>
-                        <div className='h-[72px] flex items-center justify-center'>
-                            <BsSoundwave size="24px"></BsSoundwave>
-                        </div>
-
-                    </Tooltip>
-                    <Tooltip title="A7F" placement='right'>
-                        <img src={Audio1} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-                    </Tooltip>
-                </div>
-                <div className="w-[72px] shadow-lg text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
-                transition ease-in-out">
-                    <Tooltip title="History" placement='right'>
-
-                        <div className='h-[72px] flex items-center justify-center'>
-                            <BiHistory size="24px"></BiHistory>
-                        </div>
-                    </Tooltip>
-                </div>
-                <Tooltip title="Exit" placement='right'>
-                    <div className='absolute bottom-2 text-really-dark-red hover:bg-gray-200 w-[72px] rounded-md hover:shadow-lg transition ease-in-out' onClick={handleExit}>
-
-                        <div className='h-[72px] flex items-center justify-center'>
-                            <BiExit size="24px"></BiExit>
-                        </div>
-                    </div>
-                </Tooltip>
-            </div> */}
-            <SideBar/>
+            <SideBar />
             {/* CONTAINER */}
             <div className="w-full p-6 ">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4 bg-white">
@@ -106,6 +75,8 @@ export function Home() {
                         </div>
                         <button className='w-24 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</button>
                     </div>
+                    <input type="file" accept="audio/*" onChange={handleFileChange} />
+                    <Button disabled={disabled} onClick={handleUpload}>Upload</Button>
                     <div className='w-[596px] h-60 overflow-y-auto cursor-default p-6 border flex flex-wrap'>
                         <Tooltip title="00:01" placement='top'>
                             <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1   transition ease-in-out'>
@@ -184,4 +155,8 @@ export function Home() {
             </div>
         </div>
     )
+}
+
+function sRef(storage: FirebaseStorage, arg1: string) {
+    throw new Error('Function not implemented.');
 }

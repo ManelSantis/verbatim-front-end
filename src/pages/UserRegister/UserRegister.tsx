@@ -4,17 +4,51 @@ import { DatePicker, Space } from 'antd';
 import VerbatiLogo from "../../img/Vectorverbatim_logo.svg"
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import api from "../../services/api";
 
 
 const UserRegister = () => {
-    const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-        console.log(date, dateString);
-    };
-
+    // const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    //     console.log(date, dateString);
+    // };
+    const [login, setLogin] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
     const navigate = useNavigate();
     function handleRegister() {
         navigate("/login")
     }
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (password === "" || login === "" ||password != confirmPassword) {
+            //setShowAlert(true)
+        } else {
+            // await signInRequest({login,password})
+            var bodyFormData = new FormData();
+            bodyFormData.append('email', email);
+            bodyFormData.append('password', password);
+            bodyFormData.append('user_name', login);
+
+            api.post('/signup/',
+                // {
+                //     email: login,
+                //     password: password
+                // })
+                bodyFormData
+            )
+                .then(function (response) {
+                    console.log(response);
+                    navigate("/login")
+                    // handleLogin
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }
+    };
     return (
 
         <div className="w-screen h-screen flex flex-col items-center ">
@@ -29,22 +63,27 @@ const UserRegister = () => {
                         Create a Verbatim Account
 
                     </h1>
-                    <label htmlFor="Login" className="font-semibold text-dark-red my-2 ">Login</label>
-                    <Input size="large" id="Login" placeholder="user"></Input>
-                    <label htmlFor="Password" className="font-semibold text-dark-red my-2">Password</label>
-                    <Input.Password size="large" id="Password" placeholder="Password" />
-                    <label htmlFor="Email" className="font-semibold text-dark-red my-2">Email</label>
-                    <Input size="large" id="Email" placeholder="Password" />
-                    <label htmlFor="Birthday" className="font-semibold text-dark-red my-2">Birthday</label>
-                    <DatePicker id="Birthday" size="large" className="w-full" onChange={onChange} />
-                    {/* <div className="  bottom-0 h-8 bg-gray-200"></div> */}
-                    <div className="gap-2 flex flex-col mt-8">
-                        <Button className="" variant="contained" onClick={handleRegister}>Register</Button>
-                        <div>
-                            Are you already registered?
-                            <Link to="/login" className="font-semibold mx-1 text-light-red hover:text-really-dark-red transition ease-in-out">Login here!</Link>
+                    <form onSubmit={handleSubmit}>
+
+                        <label htmlFor="UserName" className="font-semibold text-dark-red my-2 ">Username</label>
+                        <Input size="large" id="Login" placeholder="user" onChange={(e) => setLogin(e.target.value)}></Input>
+                        <label htmlFor="Email" className="font-semibold text-dark-red my-2">Email</label>
+                        <Input size="large" id="Email" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+                        <label htmlFor="Password" className="font-semibold text-dark-red my-2">Password</label>
+                        <Input.Password size="large" id="Password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                        <label htmlFor="CPassword" className="font-semibold text-dark-red my-2">Confirm Password</label>
+                        <Input.Password size="large" id="CPassword" placeholder="Password" onChange={(e) => setConfirmPassword(e.target.value)} />
+                        {/* <label htmlFor="Birthday" className="font-semibold text-dark-red my-2">Birthday</label> */}
+                        {/* <DatePicker id="Birthday" size="large" className="w-full" onChange={onChange} /> */}
+                        {/* <div className="  bottom-0 h-8 bg-gray-200"></div> */}
+                        <div className="gap-2 flex flex-col mt-8">
+                            <Button type="submit" className="" variant="contained">Register</Button>
+                            <div>
+                                Are you already registered?
+                                <Link to="/login" className="font-semibold mx-1 text-light-red hover:text-really-dark-red transition ease-in-out">Login here!</Link>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
