@@ -1,6 +1,6 @@
 import { BsFillPlayFill } from 'react-icons/bs';
 
-
+import Cookies from 'js-cookie'
 import PodCast1 from '../../img/nerdcast.jfif';
 
 import { useNavigate } from 'react-router-dom';
@@ -9,23 +9,30 @@ import { FirebaseStorage, getDownloadURL, getStorage, uploadBytes, uploadBytesRe
 import app, { uploadData } from '../../utils/firebase'
 import { Tooltip } from 'antd';
 import SideBar from '../../components/SideBar';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 
 export function Home() {
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const u = Cookies.get('user')
+        if (u == null) {
+            navigate("/login")
+        }
+    }, [])
+
     function handleExit() {
         navigate("/login")
     }
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [fileUrl,setFileUrl] = useState<string|undefined>("");
+    const [fileUrl, setFileUrl] = useState<string | undefined>("");
     const [disabled, setDisabled] = useState(false)
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         setSelectedFile(file || null);
     };
-    
+
     // const handleUpload = () => {
     //     if (selectedFile) {
     //         // Faça algo com o arquivo, como enviá-lo para o servidor
@@ -35,25 +42,25 @@ export function Home() {
     const handleUpload = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
         setDisabled(true);
-        
+
         if (selectedFile) {
-         
-          const res = await uploadData(
-           
-            selectedFile, 
-            selectedFile.name
-          );
-          
-          if (res && selectedFile) {
-            setDisabled(false);
-            setSelectedFile(null);
-            
-            // Clear the file upload value.
-            //selectedFile.value = '';
-          }
-          setFileUrl(res);
+
+            const res = await uploadData(
+
+                selectedFile,
+                selectedFile.name
+            );
+
+            if (res && selectedFile) {
+                setDisabled(false);
+                setSelectedFile(null);
+
+                // Clear the file upload value.
+                //selectedFile.value = '';
+            }
+            setFileUrl(res);
         }
-      }
+    }
     return (
         <div className="flex flex-row ">
             {/* SIDEBAR */}

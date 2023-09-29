@@ -8,7 +8,7 @@ import Svg1 from "../../img/Groupdesk.svg";
 import Svg2 from "../../img/8. order-completed.svg";
 import { useState } from "react";
 import api from "../../services/api";
-
+import Cookies from 'js-cookie'
 export function Login() {
 
 
@@ -39,6 +39,7 @@ export function Login() {
             )
                 .then(function (response) {
                     console.log(response);
+                    Cookies.set('user', response.data)
                     navigate("/home")
                 })
                 .catch(function (error) {

@@ -1,7 +1,7 @@
 import { Tooltip } from "antd";
 import { BsHeadphones, BsSoundwave } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
-
+import Cookies from 'js-cookie'
 
 import User from '../img/Casimiro.jpg';
 import PodCast1 from '../img/nerdcast.jfif';
@@ -11,13 +11,30 @@ import Audio1 from '../img/download.jfif';
 import { BiExit, BiHistory } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { Button, IconButton, Menu, MenuItem } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+
+interface User {
+    email: string,
+    user_name: string
+}
 
 export default function SideBar() {
 
+    const [user, setUser] = useState<User>()
+
+
+    useEffect(() => {
+        const u = Cookies.get('user')
+        if (u == null) {
+            navigate("/login")
+            setUser(u);
+        }
+    }, [])
     const navigate = useNavigate();
 
     function handleExit() {
+        Cookies.remove('user')
         navigate("/login")
     }
 
@@ -123,7 +140,7 @@ export default function SideBar() {
                         <MenuItem onClick={handleClose}>My Verbs</MenuItem>
                         {/* <MenuItem onClick={handleClose}>My accoun</MenuItem> */}
                         <MenuItem onClick={handleExit}>
-                            <BiExit className=" w-10 font-bold"/>
+                            <BiExit className=" w-10 font-bold" />
                             Logout
                         </MenuItem>
                     </Menu>
