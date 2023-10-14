@@ -19,18 +19,18 @@ interface User {
     user_name: string
 }
 
-export default function SideBar() {
+export default function SideBar(props:User) {
 
-    const [user, setUser] = useState<User>()
+    // const [user, setUser] = useState<User>()
 
 
-    useEffect(() => {
-        const u = Cookies.get('user')
-        if (u == null) {
-            navigate("/login")
-            setUser(u);
-        }
-    }, [])
+    // useEffect(() => {
+    //     const u = Cookies.get('user')
+    //     if (u == null) {
+    //         navigate("/login")
+    //         setUser(u);
+    //     }
+    // }, [])
     const navigate = useNavigate();
 
     function handleExit() {
@@ -56,7 +56,7 @@ export default function SideBar() {
      transition ease-in-out">
                     <img className="rounded-full h-10 w-10 bg-black" src={User}></img>
                     <label className='font-semibold'>
-                        Me
+                        {props.user_name}
                     </label>
                 </div>
             </Tooltip>

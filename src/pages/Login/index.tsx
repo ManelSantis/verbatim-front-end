@@ -2,7 +2,7 @@ import { Button } from "@mui/material"
 import { Input } from "antd"
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import { Link, useNavigate } from "react-router-dom"
+import { Link, json, useNavigate } from "react-router-dom"
 import VerbatiLogo from "../../img/Vectorverbatim_logo.svg"
 import Svg1 from "../../img/Groupdesk.svg";
 import Svg2 from "../../img/8. order-completed.svg";
@@ -39,7 +39,10 @@ export function Login() {
             )
                 .then(function (response) {
                     console.log(response);
-                    Cookies.set('user', response.data)
+                    
+                    Cookies.set('user',JSON.stringify(response.data))
+                    Cookies.set('access_token', response.data.tokens.access)
+                    Cookies.set('refreh_token', response.data.tokens.refresh)
                     navigate("/home")
                 })
                 .catch(function (error) {

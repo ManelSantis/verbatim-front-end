@@ -11,15 +11,31 @@ import { Tooltip } from 'antd';
 import SideBar from '../../components/SideBar';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Button } from '@mui/material';
+import AudioUploader from '../../components/AudioUploader';
+
+interface User {
+
+    "user_name": string,
+    "email": string,
+    "roles": Array<String>
+    "tokens": {
+        "refresh": string,
+        "access": string
+    }
+}
 
 export function Home() {
     const navigate = useNavigate();
-
+    const [actiiveUser, setActiveUser] = useState<User|null|undefined>(null);
     useEffect(() => {
-        const u = Cookies.get('user')
+        const u: User = JSON.parse(Cookies.get('user')!)
+        console.log(u)
         if (u == null) {
             navigate("/login")
+        } else {
+            setActiveUser(u)
         }
+        // setActiveUer(u);
     }, [])
 
     function handleExit() {
@@ -64,9 +80,10 @@ export function Home() {
     return (
         <div className="flex flex-row ">
             {/* SIDEBAR */}
-            <SideBar />
+            {/* <SideBar user_name="Teste" email="teste" /> */}
+            <SideBar user_name={actiiveUser!?.user_name} email={actiiveUser!?.email} />
             {/* CONTAINER */}
-            <div className="w-full p-6 ">
+            <div className="w-full p-6 h-s">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4 bg-white">
                     <h1 className='text-4xl font-black text-zinc-700 drop-shadow-md font-poppins'>
                         NerdCast
@@ -82,9 +99,11 @@ export function Home() {
                         </div>
                         <button className='w-24 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</button>
                     </div>
-                    <input type="file" accept="audio/*" onChange={handleFileChange} />
-                    <Button disabled={disabled} onClick={handleUpload}>Upload</Button>
-                    <div className='w-[596px] h-60 overflow-y-auto cursor-default p-6 border flex flex-wrap'>
+                    {/* <input type="file" accept="audio/*" onChange={handleFileChange} /> */}
+                    {/* <Button disabled={disabled} onClick={handleUpload}>Upload</Button> */}
+
+                    <AudioUploader />
+                    {/* <div className='w-[596px] h-60 overflow-y-auto cursor-default p-6 border flex flex-wrap'>
                         <Tooltip title="00:01" placement='top'>
                             <div className='rounded-full  hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1   transition ease-in-out'>
                                 Lorem ipsum dolor sit amet,
@@ -157,7 +176,7 @@ export function Home() {
                             </div>
                         </Tooltip>
                         consectetur et libero. Duis id velit accumsan, rutrum leo et, lacinia enim. Etiam ac ipsum lobortis, tempor lorem id, gravida nisl. Nulla euismod, turpis ac laoreet maximus, nulla augue elementum odio, nec mollis turpis est in erat. Quisque in neque quis nisl tincidunt lacinia a eget erat. Donec facilisis pretium justo in pellentesque. Morbi eu porta velit. Nulla lobortis luctus pulvinar.
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
