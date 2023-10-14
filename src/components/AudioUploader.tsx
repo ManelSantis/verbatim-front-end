@@ -12,6 +12,7 @@ type TranscribeResp = {
 export default function AudioUploader() {
 
     const [audioSegments, setAudioSegments] = useState<AudioBuffer[]>([]);
+    const [segmentTimes,setSegmentTimes] = useState<Number[]>([])
     const [token, setToken] = useState("");
     const [transcriptions, setTranscriptions] = useState<String[]>([]);
     const [isTranscribing, setIstranscribing] = useState(false)
@@ -83,6 +84,8 @@ export default function AudioUploader() {
                     }
                 } else {
                     if (silenceStartTime > 0) {
+                        //console.log(silenceStartTime)
+                        //console.log(segmentStart)
                         // Fim da pausa
                         const silenceDuration = audioContext.currentTime + i / sampleRate - silenceStartTime;
                         if (silenceDuration >= silenceDurationThreshold) {
@@ -96,6 +99,11 @@ export default function AudioUploader() {
                             }
                             segmentStart = i + 1; // Comece o próximo segmento após a pausa
                         }
+                        setSegmentTimes(()=>{
+                            const t = segmentTimes;
+                            t.push(segmentStart)
+                            return t
+                        })
                         silenceStartTime = 0;
                     }
                 }
@@ -151,7 +159,7 @@ export default function AudioUploader() {
                     {
                         transcriptions.map((t, index) => {
                             return (
-                                <Tooltip key={index} title="00:01" placement='top'>
+                                <Tooltip key={index} title={segmentTimes?[index]: ""} placement='top'>
                                     <div className='rounded-2xl  hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1   transition ease-in-out'>
                                         {t}
                                     </div>
