@@ -86,7 +86,7 @@ export function Home() {
             <div className="w-full p-6 h-s overflow-y-auto">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4 bg-white">
                     <h1 className='text-4xl font-black text-zinc-700 drop-shadow-md font-poppins'>
-                        NerdCast
+                        Verbatim
                     </h1>
                     {/* <Box></Box> */}
                     <img src={PodCast1} className='h-80 w-80 bg-orange-500 rounded-lg shadow-md'></img>

@@ -205,7 +205,7 @@ export default function AudioUploader() {
                         const audioSe = audioSegments2[index]; // Acessa o objeto original com base no índice
                         return (
                             <Tooltip key={index} title={formatSecondsToMinutesAndSeconds(audioSe.time)} placement='top'>
-                                <div className='rounded-2xl mx-1 hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1 transition ease-in-out'>
+                                <div className='rounded-2xl mx-1 h-auto hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1 transition ease-in-out'>
                                     {" "+t }
 
                                     {/* <div>
