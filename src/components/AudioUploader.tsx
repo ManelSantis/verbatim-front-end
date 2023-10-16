@@ -3,19 +3,24 @@ import AudioPlayer from './AudioPlayer';
 import Cookies from 'js-cookie'
 import toWav from 'audiobuffer-to-wav';
 import api from '../services/api';
-import { Tooltip } from '@mui/material';
+import { CircularProgress, LinearProgress, Tooltip } from '@mui/material';
 import { Button } from 'antd';
 type TranscribeResp = {
     message: string
 };
-
+interface AudioSlice {
+    "audio": AudioBuffer,
+    "time": number
+}
 export default function AudioUploader() {
 
     const [audioSegments, setAudioSegments] = useState<AudioBuffer[]>([]);
-    const [segmentTimes,setSegmentTimes] = useState<Number[]>([])
+    const [audioSegments2, setAudioSegments2] = useState<AudioSlice[]>([]);
+    const [segmentTimes, setSegmentTimes] = useState<Number[]>([])
     const [token, setToken] = useState("");
     const [transcriptions, setTranscriptions] = useState<String[]>([]);
     const [isTranscribing, setIstranscribing] = useState(false)
+    const [actualSegmentTranscribing, setActualSegmentTranscribing] = useState(0);
     useEffect(() => {
         const t: string = Cookies.get('access_token')!
         setToken(t)
@@ -23,9 +28,12 @@ export default function AudioUploader() {
     }, [])
 
     const handleTranscribe = async () => {
-        for (const buffer of audioSegments) {
-            setIstranscribing(true)
-            const wav = toWav(buffer);
+        setTranscriptions([])
+        setIstranscribing(true)
+        // for (const buffer of audioSegments2) {
+        for (const [index, buffer] of audioSegments2.entries()) {
+            setActualSegmentTranscribing(index)
+            const wav = toWav(buffer.audio);
 
             const blob = new Blob([wav], { type: "audio/wav" });
 
@@ -40,6 +48,7 @@ export default function AudioUploader() {
                         'Authorization': `Bearer  ${token}`
                     }
                 }
+
             );
             setTranscriptions(() => {
                 const t = transcriptions
@@ -67,6 +76,7 @@ export default function AudioUploader() {
             const sampleRate = audioBuffer.sampleRate;
             const audioData = audioBuffer.getChannelData(0);
             const segments: AudioBuffer[] = [];
+            const segments2: AudioSlice[] = []
             let segmentStart = 0;
             let silenceStartTime = 0;
 
@@ -96,14 +106,22 @@ export default function AudioUploader() {
                                 const segmentData = audioData.slice(segmentStart, i);
                                 segment.getChannelData(0).set(segmentData);
                                 segments.push(segment);
+                                let s = {
+                                    audio: segment,
+                                    time: silenceStartTime,
+                                }
+                                segments2.push(s);
+
+
                             }
                             segmentStart = i + 1; // Comece o próximo segmento após a pausa
                         }
-                        setSegmentTimes(()=>{
+                        setSegmentTimes(() => {
                             const t = segmentTimes;
                             t.push(segmentStart)
                             return t
                         })
+
                         silenceStartTime = 0;
                     }
                 }
@@ -117,6 +135,7 @@ export default function AudioUploader() {
             // Configure os segmentos no estado ou faça algo com eles
             console.log('Número de segmentos:', segments.length);
             setAudioSegments(segments)
+            setAudioSegments2(segments2)
         }
 
     };
@@ -137,7 +156,16 @@ export default function AudioUploader() {
             reader.readAsArrayBuffer(file);
         });
     };
+    const TranscribeProgress = () => {
+        return <div>
+            Transcribing {actualSegmentTranscribing} out {audioSegments2.length}
+            <CircularProgress />
+            <div className='w-96'>
 
+                <LinearProgress variant='determinate'  value={(actualSegmentTranscribing/audioSegments2.length)*100} />
+            </div>
+        </div>
+    }
     return (
         <>
             <div>
@@ -150,27 +178,55 @@ export default function AudioUploader() {
           ))}
         </ul> */}
             </div>
-            <AudioPlayer audioSegments={audioSegments} />
+            {/* <AudioPlayer audioSegments={audioSegments} /> */}
+            {audioSegments2.length}
             <Button onClick={handleTranscribe}>Transcrever</Button>
-            {isTranscribing ? <p> Transcribing</p> : <p></p>}
+            {isTranscribing ?
+                <TranscribeProgress /> : <p></p>}
             {
-                !isTranscribing && transcriptions.length > 0 &&
-                <div className='min-h-[200px] w-[596px] h-60 overflow-y-auto cursor-default p-6 border flex flex-wrap'>
-                    {
-                        transcriptions.map((t, index) => {
-                            return (
-                                <Tooltip key={index} title={segmentTimes?[index]: ""} placement='top'>
-                                    <div className='rounded-2xl  hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1   transition ease-in-out'>
-                                        {t}
-                                    </div>
-                                </Tooltip>
+                // !isTranscribing && transcriptions.length > 0 &&
+                // <div className='min-h-[200px] w-[596px] h-60 overflow-y-auto cursor-default p-6 border flex flex-wrap'>
+                //     {
+                //         transcriptions.map((t, index) => {
+                //             return (
+                //                 <Tooltip key={index} title={segmentTimes?[index]: ""} placement='top'>
+                //                     <div className='rounded-2xl  hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1   transition ease-in-out'>
+                //                         {t}
+                //                     </div>
+                //                 </Tooltip>
 
-                            )
-                        })
-                    }
+                //             )
+                //         })
+                //     }
+                // </div>
+                transcriptions.length > 0 &&
+                <div className='min-h-[200px] min-w-[596px] w-[900px] h-60 overflow-y-auto cursor-default p-6 border flex flex-wrap'>
+                    {transcriptions.map((t, index) => {
+                        const audioSe = audioSegments2[index]; // Acessa o objeto original com base no índice
+                        return (
+                            <Tooltip key={index} title={formatSecondsToMinutesAndSeconds(audioSe.time)} placement='top'>
+                                <div className='rounded-2xl mx-1 hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1 transition ease-in-out'>
+                                    {" "+t }
+
+                                    {/* <div>
+                                        Tempo: {audioSe.time.toString()}
+                                    </div> */}
+                                </div>
+                            </Tooltip>
+                        );
+                    })}
                 </div>
+
+
             }
         </>
     )
+    function formatSecondsToMinutesAndSeconds(totalSeconds: number) {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
 
+        const formattedTime = `${minutes}m:${seconds.toFixed(0).toString().padStart(2, '0')}s`;
+
+        return formattedTime;
+    }
 }

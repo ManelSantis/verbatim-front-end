@@ -78,12 +78,12 @@ export function Home() {
         }
     }
     return (
-        <div className="flex flex-row ">
+        <div className="flex flex-row h-screen">
             {/* SIDEBAR */}
             {/* <SideBar user_name="Teste" email="teste" /> */}
             <SideBar user_name={actiiveUser!?.user_name} email={actiiveUser!?.email} />
             {/* CONTAINER */}
-            <div className="w-full p-6 h-s">
+            <div className="w-full p-6 h-s overflow-y-auto">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4 bg-white">
                     <h1 className='text-4xl font-black text-zinc-700 drop-shadow-md font-poppins'>
                         NerdCast
