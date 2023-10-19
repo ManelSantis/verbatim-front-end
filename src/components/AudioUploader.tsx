@@ -29,10 +29,13 @@ export default function AudioUploader() {
     }, [])
 
     const handlePDF = () => {
-        const x = 10; // Posição horizontal
-        let y = 10; // Posição vertical inicial
-
+            const x = 10; // Posição horizontal
+            let y = 20; // Posição vertical inicial
+            const maxY = 280;
             const doc = new jsPDF();
+            doc.setFont("times");
+            doc.setFontSize(14);
+
             const joinedString = transcriptions.join(' ');
 
             const larguraDisponivel = 190; // Largura disponível em milímetros
@@ -40,7 +43,11 @@ export default function AudioUploader() {
             const linhas = doc.splitTextToSize(joinedString, larguraDisponivel);
             linhas.forEach((linha) => {
               doc.text(linha, x, y);
-              y += 10; // Ajuste conforme necessário para espaçamento entre as linhas
+              y += 8; // Ajuste conforme necessário para espaçamento entre as linhas
+              if(y > maxY){
+                doc.addPage();
+                y = 20;
+               }
             });
 
             doc.save('texto.pdf');
