@@ -3,6 +3,7 @@ import AudioPlayer from './AudioPlayer';
 import Cookies from 'js-cookie'
 import toWav from 'audiobuffer-to-wav';
 import api from '../services/api';
+import jsPDF from 'jspdf';
 import { CircularProgress, LinearProgress, Tooltip } from '@mui/material';
 import { Button } from 'antd';
 type TranscribeResp = {
@@ -26,6 +27,25 @@ export default function AudioUploader() {
         setToken(t)
         console.log(token)
     }, [])
+
+    const handlePDF = () => {
+        const x = 10; // Posição horizontal
+        let y = 10; // Posição vertical inicial
+
+            const doc = new jsPDF();
+            const joinedString = transcriptions.join(' ');
+
+            const larguraDisponivel = 190; // Largura disponível em milímetros
+
+            const linhas = doc.splitTextToSize(joinedString, larguraDisponivel);
+            linhas.forEach((linha) => {
+              doc.text(linha, x, y);
+              y += 10; // Ajuste conforme necessário para espaçamento entre as linhas
+            });
+
+            doc.save('texto.pdf');
+     };
+
 
     const handleTranscribe = async () => {
         setTranscriptions([])
@@ -181,6 +201,7 @@ export default function AudioUploader() {
             {/* <AudioPlayer audioSegments={audioSegments} /> */}
             {audioSegments2.length}
             <Button onClick={handleTranscribe}>Transcrever</Button>
+            <Button onClick={handlePDF}>Gerar PDF</Button>
             {isTranscribing ?
                 <TranscribeProgress /> : <p></p>}
             {
