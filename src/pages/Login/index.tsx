@@ -1,16 +1,15 @@
-import { Alert, Button, IconButton, Input, InputAdornment, OutlinedInput, Snackbar, TextField, ThemeProvider, createTheme } from "@mui/material"
+import { Alert, Button, IconButton, InputAdornment, OutlinedInput, Snackbar, TextField, ThemeProvider, createTheme } from "@mui/material";
 // import { Input } from "antd"
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import { Link, json, useNavigate } from "react-router-dom"
-import VerbatiLogo from "../../img/Vectorverbatim_logo.svg"
-import Svg1 from "../../img/Groupdesk.svg";
-import Svg2 from "../../img/8. order-completed.svg";
-import { useState } from "react";
-import api from "../../services/api";
-import Cookies from 'js-cookie'
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Cookies from 'js-cookie';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import SVG2 from "../../img/8. order-completed.svg";
+import SVG1 from "../../img/Groupdesk.svg";
+import VerbatimLogo from "../../img/LogoVerbatim.svg";
+
+import api from "../../services/api";
 export function Login() {
 
     const theme = createTheme({
@@ -87,24 +86,27 @@ export function Login() {
     };
     return (
         <div className="w-screen h-screen flex flex-col items-center justify-center ">
-            <img className="absolute left-8 top-8" src={Svg1}></img>
-            <img className="absolute right-8 bottom-8" src={Svg2}></img>
-            <div className="w-1/4">
+            <div className="md:flex flex sm:hidden">
+                <img className="absolute left-4 top-4 lg:max-w-8xl" src={SVG1}></img>
+            </div>
+            <div className="md:flex flex sm:hidden">
+            <img className="absolute right-4 bottom-4 lg:max-w-8xl" src={SVG2}></img>
+            </div>
+            <div className="w-[400px]">
                 <form onSubmit={handleSubmit}>
 
-                    <div className=" h-52 w-full flex flex-col items-center justify-center" >
+                    <div className="h-52 w-full flex flex-col items-center justify-center" >
 
-                        <img src={VerbatiLogo} className="h-52 w-52 rounded-full shadow-2xl bg-slate-400">
+                        <img src={VerbatimLogo} className="h-100 w-100 pb-24">
 
                         </img>
                     </div>
-                    <label htmlFor="Login" className="font-semibold text-dark-red my-2 ">Email</label>
+                    <label htmlFor="Login" className="font-semibold text-dark-red my-2">Email</label>
                     <TextField
                         variant="outlined"
                         error={isError}
                         id="Login"
-                        className="w-full" placeholder="user" onChange={(e) => setLogin(e.target.value)}
-                        helperText="Incorrect entry."
+                        className="w-full" placeholder="email" onChange={(e) => setLogin(e.target.value)}
                     ></TextField>
                     <label htmlFor="Password" className="font-semibold text-dark-red my-2">Password</label>
                     {/* <TextField  id="Password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} /> */}
@@ -113,6 +115,7 @@ export function Login() {
                         error={isError}
                         className="w-full"
                         id="Password"
+                        placeholder="password"
                         type={showPassword ? 'text' : 'password'}
                         endAdornment={
                             <InputAdornment position="end">
