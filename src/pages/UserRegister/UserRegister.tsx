@@ -1,10 +1,8 @@
+import { Alert, Button, Snackbar, ThemeProvider, createTheme } from "@mui/material";
 import { Input } from "antd";
-import type { DatePickerProps } from 'antd';
-import { DatePicker, Space } from 'antd';
-import VerbatiLogo from "../../img/Vectorverbatim_logo.svg"
-import { Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import VerbatiLogo from "../../img/Vectorverbatim_logo.svg";
 import api from "../../services/api";
 
 
@@ -16,9 +14,30 @@ const UserRegister = () => {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [isError, setIsError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("");
+    const [open, setOpen] = useState(false)
+
+    const theme = createTheme({
+        palette: {
+
+            error: {
+                main: "#f44336",
+                light: "#e57373",
+                dark: '#d32f2f',
+                contrastText: '#fff',
+            },
+        },
+    });
+
     const navigate = useNavigate();
     function handleRegister() {
         navigate("/login")
+    }
+
+    const handleOpenSnack = () => {
+        setOpen(false)
+
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -26,7 +45,7 @@ const UserRegister = () => {
         if (password === "" || login === "" ||password != confirmPassword) {
             //setShowAlert(true)
         } else {
-            // await signInRequest({login,password})
+            //await signInRequest({login,password})
             var bodyFormData = new FormData();
             bodyFormData.append('email', email);
             bodyFormData.append('password', password);
@@ -46,6 +65,9 @@ const UserRegister = () => {
                 })
                 .catch(function (error) {
                     console.error(error);
+                    setOpen(true);
+                    setIsError(true);
+                    setErrorMessage(error.response.data.message);
                 });
         }
     };
@@ -86,6 +108,18 @@ const UserRegister = () => {
                     </form>
                 </div>
             </div>
+            <ThemeProvider theme={theme}>
+
+                <Snackbar className="w-full"
+                    // anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                    open={open}
+                    onClose={handleOpenSnack}
+                    message="I love snacks"
+
+                >
+                    <Alert severity="error">{errorMessage}</Alert>
+                </Snackbar>
+            </ThemeProvider>
         </div>
 
     )
