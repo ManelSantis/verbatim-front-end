@@ -2,7 +2,7 @@ import { Alert, Button, Snackbar, ThemeProvider, createTheme } from "@mui/materi
 import { Input } from "antd";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import VerbatiLogo from "../../img/Vectorverbatim_logo.svg";
+import VerbatimLogo from "../../img/LogoVerbatim.svg";
 import api from "../../services/api";
 
 
@@ -75,32 +75,32 @@ const UserRegister = () => {
 
         <div className="w-screen h-screen flex flex-col items-center ">
             <div className="h-screen w-[500px] flex flex-col justify-center">
-                <div className="h-24 w-full flex flex-col items-center justify-center my-3">
-                    <img src={VerbatiLogo} className="h-24 w-24 rounded-full shadow-sm bg-slate-400">
+                <div className="h-48 w-full flex flex-col items-center justify-center my-3">
+                    <img src={VerbatimLogo} className="h-44 w-44">
 
                     </img>
                 </div>
-                <div className="h-[550px] w-full border shadow-lg rounded-md p-6">
-                    <h1 className="text-2xl font-poppins font-semibold w-full text-center my-4">
+                <div className="h-[472px] w-full border shadow-lg rounded-md p-6">
+                    <h1 className="text-2xl font-poppins font-semibold  text-dark-red w-full text-center my-4">
                         Create a Verbatim Account
 
                     </h1>
                     <form onSubmit={handleSubmit}>
 
                         <label htmlFor="UserName" className="font-semibold text-dark-red my-2 ">Username</label>
-                        <Input size="large" id="Login" placeholder="user" onChange={(e) => setLogin(e.target.value)}></Input>
+                        <Input size="large" id="Login" placeholder="username" onChange={(e) => setLogin(e.target.value)}></Input>
                         <label htmlFor="Email" className="font-semibold text-dark-red my-2">Email</label>
                         <Input size="large" id="Email" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
                         <label htmlFor="Password" className="font-semibold text-dark-red my-2">Password</label>
-                        <Input.Password size="large" id="Password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                        <Input.Password size="large" id="Password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
                         <label htmlFor="CPassword" className="font-semibold text-dark-red my-2">Confirm Password</label>
-                        <Input.Password size="large" id="CPassword" placeholder="Password" onChange={(e) => setConfirmPassword(e.target.value)} />
+                        <Input.Password size="large" id="CPassword" placeholder="password" onChange={(e) => setConfirmPassword(e.target.value)} />
                         {/* <label htmlFor="Birthday" className="font-semibold text-dark-red my-2">Birthday</label> */}
                         {/* <DatePicker id="Birthday" size="large" className="w-full" onChange={onChange} /> */}
                         {/* <div className="  bottom-0 h-8 bg-gray-200"></div> */}
                         <div className="gap-2 flex flex-col mt-8">
                             <Button type="submit" className="" variant="contained">Register</Button>
-                            <div>
+                            <div className="w-full mb-2 text-right text-dark-red">
                                 Are you already registered?
                                 <Link to="/login" className="font-semibold mx-1 text-light-red hover:text-really-dark-red transition ease-in-out">Login here!</Link>
                             </div>

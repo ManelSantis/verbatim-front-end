@@ -131,7 +131,7 @@ export function Login() {
 
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <div className="w-full mb-2 text-right text-white">
+                    <div className="w-full mb-2 text-right text-dark-red">
                         Not registered?
                         <Link to="/auth/register" className="font-semibold mx-1 text-light-red hover:text-really-dark-red transition ease-in-out">Sign in</Link>
                     </div>
