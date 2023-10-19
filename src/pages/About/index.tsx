@@ -20,7 +20,7 @@ interface User {
     }
 }
 
-export function Home() {
+export function About() {
     const navigate = useNavigate();
     const [actiiveUser, setActiveUser] = useState<User|null|undefined>(null);
     useEffect(() => {

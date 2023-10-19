@@ -1,17 +1,13 @@
 import { Tooltip } from "antd";
-import { BsHeadphones, BsSoundwave } from "react-icons/bs";
+import Cookies from 'js-cookie';
+import { BsHeadphones, BsHouse, BsQuestionCircle } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
-import Cookies from 'js-cookie'
 
-import User from '../img/Casimiro.jpg';
-import PodCast1 from '../img/nerdcast.jfif';
-import PodCast2 from '../img/podpah.jfif';
-import PodCast3 from '../img/flow.png';
-import Audio1 from '../img/download.jfif';
-import { BiExit, BiHistory } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
 import { Button, IconButton, Menu, MenuItem } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { BiExit } from "react-icons/bi";
+import { Link, useNavigate } from "react-router-dom";
+import User from '../img/Casimiro.jpg';
 
 
 interface User {
@@ -19,7 +15,7 @@ interface User {
     user_name: string
 }
 
-export default function SideBar(props:User) {
+export default function SideBar(props: User) {
 
     // const [user, setUser] = useState<User>()
 
@@ -54,55 +50,44 @@ export default function SideBar(props:User) {
 
                 <div className="h-[72px] w-[72px] shadow-lg p-1 bg-gray-200 hover:bg-gray-100  flex flex-col justify-center items-center text-sm rounded-md mb-2
      transition ease-in-out">
-                    <img className="rounded-full h-10 w-10 bg-black" src={User}></img>
+                    <div className='w-10 h-10 bg-white rounded-full shadow-inner flex items-center justify-center'>
+                        <label className='font-bold text-sm text-dark-red'>
+                            {/*props.user_name.split(' ')[0].charAt(0)}
+                        {props.user_name.split(' ')[0]?.charAt(1)*/}
+                        </label>
+                    </div>
                     <label className='font-semibold'>
                         {props.user_name}
                     </label>
                 </div>
             </Tooltip>
             <hr className="w-[72px]  border border-rose-200"></hr>
-            <div className="w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2 
+            <div className="cursor-pointer w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
     transition ease-in-out">
-                <Tooltip title="Podcasts" placement='right'>
-                    <div className='h-[72px] flex items-center justify-center'>
-                        <BsHeadphones size="24px"></BsHeadphones>
-                    </div>
-                </Tooltip>
-
-                <Tooltip title="NerdCast" placement='right'>
-                    <img src={PodCast1} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-
-                </Tooltip>
-                <Tooltip title="PodPah" placement='right'>
-                    <img src={PodCast2} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-
-                </Tooltip>
-                <Tooltip title="Flow" placement='right'>
-                    <img src={PodCast3} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-
-                </Tooltip>
-
+                <Link to="/home">
+                    <Button title="Home" className='cursor-pointer h-[72px] flex items-center justify-center'>
+                        <BsHouse size="24px"></BsHouse>
+                    </Button>
+                </Link>
             </div>
-            <div className="w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
+
+            <div className="cursor-pointer w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2 
     transition ease-in-out">
-                <Tooltip title="Audios" placement='right'>
-                    <div className='h-[72px] flex items-center justify-center'>
-                        <BsSoundwave size="24px"></BsSoundwave>
-                    </div>
-
-                </Tooltip>
-                <Tooltip title="A7F" placement='right'>
-                    <img src={Audio1} className='h-16 w-16 bg-orange-600 rounded-md'></img>
-                </Tooltip>
+                <Link to="/podcasts"><Button className='h-[72px] flex items-center justify-center' title="Podcasts">
+                    <BsHeadphones size="24px"></BsHeadphones>
+                </Button></Link>
             </div>
+
+            <div className="cursor-pointer w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
+    transition ease-in-out">
+                <Link to="/about"><Button title="About" className='cursor-pointer h-[72px] flex items-center justify-center'>
+                    <BsQuestionCircle size="24px"></BsQuestionCircle>   
+                </Button>
+                </Link>
+            </div>
+
             <div className="w-[72px] shadow-lg text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
     transition ease-in-out">
-                <Tooltip title="History" placement='right'>
-
-                    <div className='h-[72px] flex items-center justify-center'>
-                        <BiHistory size="24px"></BiHistory>
-                    </div>
-                </Tooltip>
             </div>
             <Tooltip title="Menu" placement='right'>
                 {/* <div className='absolute bottom-2 text-really-dark-red hover:bg-gray-200 w-[72px] rounded-md hover:shadow-lg transition ease-in-out' onClick={handleExit}>

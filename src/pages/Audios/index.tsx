@@ -5,6 +5,7 @@ import { FirebaseStorage } from "firebase/storage";
 import { useNavigate } from 'react-router-dom';
 
 import { ChangeEvent, useEffect, useState } from 'react';
+import AudioUploader from '../../components/AudioUploader';
 import SideBar from '../../components/SideBar';
 import { uploadData } from '../../utils/firebase';
 
@@ -20,7 +21,7 @@ interface User {
     }
 }
 
-export function Home() {
+export function Audios() {
     const navigate = useNavigate();
     const [actiiveUser, setActiveUser] = useState<User|null|undefined>(null);
     useEffect(() => {
@@ -45,6 +46,12 @@ export function Home() {
         setSelectedFile(file || null);
     };
 
+    // const handleUpload = () => {
+    //     if (selectedFile) {
+    //         // Faça algo com o arquivo, como enviá-lo para o servidor
+    //         console.log('Arquivo selecionado:', selectedFile.name);
+    //     }
+    // };
     const handleUpload = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
         setDisabled(true);
@@ -76,7 +83,7 @@ export function Home() {
             <div className="w-full p-6 h-s overflow-y-auto">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4 bg-white">
                     <div className="pt-2 flex flex-col items-center justify-center">
-                        
+                        <AudioUploader/>
                     </div>
                 </div>
             </div>

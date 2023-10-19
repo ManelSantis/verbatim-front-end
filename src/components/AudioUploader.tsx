@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
-import AudioPlayer from './AudioPlayer';
-import Cookies from 'js-cookie'
-import toWav from 'audiobuffer-to-wav';
-import api from '../services/api';
 import { CircularProgress, LinearProgress, Tooltip } from '@mui/material';
-import { Button } from 'antd';
+import toWav from 'audiobuffer-to-wav';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import VerbatimLogo from "../img/LogoVerbatim.svg";
+
+import api from '../services/api';
 type TranscribeResp = {
     message: string
 };
@@ -162,43 +162,30 @@ export default function AudioUploader() {
             <CircularProgress />
             <div className='w-96'>
 
-                <LinearProgress variant='determinate'  value={(actualSegmentTranscribing/audioSegments2.length)*100} />
+                <LinearProgress variant='determinate' value={(actualSegmentTranscribing / audioSegments2.length) * 100} />
             </div>
         </div>
     }
     return (
         <>
-            <div>
-                <input type="file" accept="audio/*" onChange={handleAudioInputChange} />
-                {/* <ul>
-          {audioSegments.map((segment, index) => (
-            <li key={index}>
-              Segmento de Áudio {index + 1}: amostras
-            </li>
-          ))}
-        </ul> */}
+            <div className="h-52 w-full flex flex-col items-center justify-center" >
+
+                <img src={VerbatimLogo} className="h-100 w-100 pb-24"></img>
             </div>
-            {/* <AudioPlayer audioSegments={audioSegments} /> */}
+            <div>
+
+                <div className="text-center pt-2 mb-4 rounded-full w-[175px] h-[38px] bg-[#8d3726] cursor-pointer">
+                    <input id="fileInput" type="file" accept="audio/*" onChange={handleAudioInputChange} />
+                    <label htmlFor="fileInput" className=" text-white cursor-pointer"> Add new podcast </label>
+                </div>
+            </div>
             {audioSegments2.length}
-            <Button onClick={handleTranscribe}>Transcrever</Button>
+            <div className='flex flex-row gap-2 pt-4'>
+                <button onClick={handleTranscribe} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</button>
+            </div>
             {isTranscribing ?
                 <TranscribeProgress /> : <p></p>}
             {
-                // !isTranscribing && transcriptions.length > 0 &&
-                // <div className='min-h-[200px] w-[596px] h-60 overflow-y-auto cursor-default p-6 border flex flex-wrap'>
-                //     {
-                //         transcriptions.map((t, index) => {
-                //             return (
-                //                 <Tooltip key={index} title={segmentTimes?[index]: ""} placement='top'>
-                //                     <div className='rounded-2xl  hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1   transition ease-in-out'>
-                //                         {t}
-                //                     </div>
-                //                 </Tooltip>
-
-                //             )
-                //         })
-                //     }
-                // </div>
                 transcriptions.length > 0 &&
                 <div className='min-h-[200px] min-w-[596px] w-[900px] h-60 overflow-y-auto cursor-default p-6 border flex flex-wrap'>
                     {transcriptions.map((t, index) => {
@@ -206,7 +193,7 @@ export default function AudioUploader() {
                         return (
                             <Tooltip key={index} title={formatSecondsToMinutesAndSeconds(audioSe.time)} placement='top'>
                                 <div className='rounded-2xl mx-1 h-auto hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1 transition ease-in-out'>
-                                    {" "+t }
+                                    {" " + t}
 
                                     {/* <div>
                                         Tempo: {audioSe.time.toString()}
@@ -216,11 +203,10 @@ export default function AudioUploader() {
                         );
                     })}
                 </div>
-
-
             }
         </>
     )
+
     function formatSecondsToMinutesAndSeconds(totalSeconds: number) {
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
