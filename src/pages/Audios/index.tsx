@@ -80,10 +80,10 @@ export function Audios() {
             {/* <SideBar user_name="Teste" email="teste" /> */}
             <SideBar user_name={actiiveUser!?.user_name} email={actiiveUser!?.email} />
             {/* CONTAINER */}
-            <div className="w-full p-6 h-s overflow-y-auto">
+            <div className="w-full p-6 h-s">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4 bg-white">
-                    <div className="pt-2 flex flex-col items-center justify-center">
-                        <AudioUploader/>
+                    <div className="w-full h-full pt-2 flex flex-col items-center justify-center">
+                        <AudioUploader />
                     </div>
                 </div>
             </div>

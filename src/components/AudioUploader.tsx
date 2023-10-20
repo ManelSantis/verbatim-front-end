@@ -1,13 +1,12 @@
-import { CircularProgress, LinearProgress, Tooltip } from '@mui/material';
+import { LinearProgress, Tooltip } from '@mui/material';
+import { Button } from 'antd';
 import toWav from 'audiobuffer-to-wav';
 import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
-import VerbatimLogo from "../img/LogoVerbatim.svg";
-import '../styles/modal.css';
-import { Button } from 'antd';
 import jsPDF from 'jspdf';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import VerbatimLogo from "../img/LogoVerbatim.svg";
 import api from '../services/api';
+import '../styles/modal.css';
 type TranscribeResp = {
     message: string
 };
@@ -209,23 +208,23 @@ export default function AudioUploader() {
     };
     const TranscribeProgress = () => {
         return <div>
-            Transcribing {actualSegmentTranscribing} out of {audioSegments2.length}
-            <CircularProgress />
+            
             <div className='w-96'>
-
+            Transcribing {actualSegmentTranscribing} out of {audioSegments2.length}
                 <LinearProgress variant='determinate' value={(actualSegmentTranscribing / audioSegments2.length) * 100} />
             </div>
         </div>
     }
     return (
         <>
-            <div className="h-52 w-full flex flex-col items-center justify-center" >
+        <div className="w-full h-full flex flex-col items-center justify-center overflow-y-auto ">
 
-                <img src={VerbatimLogo} className="h-100 w-100 pb-24"></img>
+            <div className="h-[250px]  w-[250px] flex flex-col items-center justify-center" >
+                <img src={VerbatimLogo} className="h-[250px] w-[250px] pb-8"></img>
             </div>
-            <div>
 
-                <div className="text-center pt-2 mb-4 rounded-full w-[175px] h-[38px] bg-[#8d3726] cursor-pointer">
+            <div>
+                <div className="text-center pt-1 mb-4 rounded-full w-[175px] h-[30px] bg-[#8d3726] cursor-pointer">
                     <input id="audioInput" type="file" accept="audio/*" onChange={handleAudioInputChange} />
                     <label htmlFor="audioInput" className=" text-white cursor-pointer"> Add new podcast </label>
                 </div>
@@ -236,12 +235,13 @@ export default function AudioUploader() {
             <div className='flex flex-row gap-2 pt-4'>
                 <button onClick={handleTranscribe} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</button>
             </div>
+            
             {isTranscribing ?
                 <TranscribeProgress /> : <p></p>}
             {
                 (transcriptions.length > 0) &&
                 <>
-                <div className='min-h-[200px] min-w-[596px] w-[900px] h-60 overflow-y-auto cursor-default p-6 border flex flex-wrap'>
+                <div className='mt-4 min-h-[200px] min-w-[596px] w-[350px] h-[90px] overflow-y-auto cursor-default p-6 border flex flex-wrap'>
                     {transcriptions.map((t, index) => {
                         const audioSe = audioSegments2[index]; // Acessa o objeto original com base no índice
                         return (
@@ -260,8 +260,8 @@ export default function AudioUploader() {
                 {(actualSegmentTranscribing == audioSegments.length - 1) &&
                 <div className='flex flex-row gap-2 pt-4'>
 
-                    <Button onClick={openModal} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Editar Texto</Button>
-                    <Button onClick={handlePDF} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Gerar PDF</Button>
+                    <button onClick={openModal} className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Editar Texto</button>
+                    <button onClick={handlePDF} className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Gerar PDF</button>
 
                 </div>
                 }
@@ -281,12 +281,12 @@ export default function AudioUploader() {
                          ></textarea><br />
 
                         <Button onClick={handlePDF}>Gerar PDF</Button>
-
-
                       </div>
                    </div>
                     </>
                   )}
+        
+        </div>
         </>
     )
     function formatSecondsToMinutesAndSeconds(totalSeconds: number) {

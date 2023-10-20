@@ -75,7 +75,7 @@ export function About() {
             {/* CONTAINER */}
             <div className="w-full p-6 h-s overflow-y-auto">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4 bg-white">
-                    <div className="pt-2 flex flex-col items-center justify-center">
+                    <div className="pt-2 flex flex-col items-center justify-center overflow-y-auto">
                         
                     </div>
                 </div>
