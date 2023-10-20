@@ -52,8 +52,8 @@ export default function SideBar(props: User) {
      transition ease-in-out">
                     <div className='w-10 h-10 bg-white rounded-full shadow-inner flex items-center justify-center'>
                         <label className='font-bold text-sm text-dark-red'>
-                            {/*props.user_name.split(' ')[0].charAt(0)}
-                        {props.user_name.split(' ')[0]?.charAt(1)*/}
+                            {props.user_name?.charAt(0)}
+                            {props.user_name?.charAt(1)}
                         </label>
                     </div>
                     <label className='font-semibold'>
