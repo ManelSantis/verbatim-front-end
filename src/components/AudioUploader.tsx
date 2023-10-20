@@ -16,8 +16,6 @@ interface AudioSlice {
     "time": number
 }
 export default function AudioUploader() {
-
-    
     let audioRef = React.createRef();
 
     const [audioSegments, setAudioSegments] = useState<AudioBuffer[]>([]);
@@ -237,8 +235,6 @@ export default function AudioUploader() {
             
             <div className='flex flex-row gap-2 pt-4'>
                 <button onClick={handleTranscribe} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</button>
-                <Button onClick={handlePDF}>Gerar PDF</Button>
-                <Button onClick={openModal}>Editar Texto</Button>
             </div>
             {isTranscribing ?
                 <TranscribeProgress /> : <p></p>}
