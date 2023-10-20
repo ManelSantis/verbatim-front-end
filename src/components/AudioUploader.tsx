@@ -71,11 +71,13 @@ export default function AudioUploader() {
 
 
     const handleTranscribe = async () => {
-        setTranscriptions([])
-        setIstranscribing(true)
+        setTranscriptions([]);
+        setText('');
+        setIstranscribing(true);
+        
         // for (const buffer of audioSegments2) {
         for (const [index, buffer] of audioSegments2.entries()) {
-            setActualSegmentTranscribing(index)
+            setActualSegmentTranscribing(index);
             const wav = toWav(buffer.audio);
 
             const blob = new Blob([wav], { type: "audio/wav" });
@@ -104,6 +106,12 @@ export default function AudioUploader() {
     }
 
     const handleAudioInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSegmentTimes([]);
+        setAudioSegments([]);
+        setAudioSegments2([]);
+        setText('');
+        setTranscriptions([]);
+
         const file = e.target.files?.[0];
         const audioElement = audioRef.current;
 
