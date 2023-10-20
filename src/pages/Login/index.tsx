@@ -72,7 +72,7 @@ export function Login() {
                     Cookies.set('user', JSON.stringify(response.data))
                     Cookies.set('access_token', response.data.tokens.access)
                     Cookies.set('refreh_token', response.data.tokens.refresh)
-                    navigate("/home")
+                    navigate("/podcasts")
                 })
                 .catch(function (error) {
                     console.error(error);

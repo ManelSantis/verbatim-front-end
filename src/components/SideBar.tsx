@@ -1,6 +1,6 @@
 import { Tooltip } from "antd";
 import Cookies from 'js-cookie';
-import { BsHeadphones, BsHouse, BsQuestionCircle } from "react-icons/bs";
+import { BsHeadphones, BsQuestionCircle } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 import { Button, IconButton, Menu, MenuItem } from "@mui/material";
@@ -62,14 +62,6 @@ export default function SideBar(props: User) {
                 </div>
             </Tooltip>
             <hr className="w-[72px]  border border-rose-200"></hr>
-            <div className="cursor-pointer w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2
-    transition ease-in-out">
-                <Link to="/home">
-                    <Button title="Home" className='cursor-pointer h-[72px] flex items-center justify-center'>
-                        <BsHouse size="24px"></BsHouse>
-                    </Button>
-                </Link>
-            </div>
 
             <div className="cursor-pointer w-[72px] shadow-lg p-1 pt-2 text-[#771A0F] bg-gray-200 hover:bg-gray-100  flex flex-col items-center text-sm rounded-md gap-2 
     transition ease-in-out">
