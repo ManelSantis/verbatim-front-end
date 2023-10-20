@@ -80,3 +80,10 @@ button {
 .hidden {
   display: none;
 }
+.botao-close{
+    position: absolute;
+    top: 20px; /* Ajuste a distância do topo conforme necessário */
+    right: 30px; /* Ajuste a distância da direita conforme necessário */
+    cursor: pointer;
+}
+
