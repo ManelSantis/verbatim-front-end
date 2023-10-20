@@ -3,7 +3,7 @@ import toWav from 'audiobuffer-to-wav';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import VerbatimLogo from "../img/LogoVerbatim.svg";
-
+import '../styles/modal.css';
 import api from '../services/api';
 import jsPDF from 'jspdf';
 import { Button } from 'antd';
@@ -200,7 +200,7 @@ export default function AudioUploader() {
     };
     const TranscribeProgress = () => {
         return <div>
-            Transcribing {actualSegmentTranscribing} out {audioSegments2.length}
+            Transcribing {actualSegmentTranscribing} out of {audioSegments2.length}
             <CircularProgress />
             <div className='w-96'>
 
@@ -224,13 +224,13 @@ export default function AudioUploader() {
             {audioSegments2.length}
             <div className='flex flex-row gap-2 pt-4'>
                 <button onClick={handleTranscribe} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</button>
-                <Button onClick={handlePDF}>Gerar PDF</Button>
-                <Button onClick={openModal}>Editar Texto</Button>
+
             </div>
             {isTranscribing ?
                 <TranscribeProgress /> : <p></p>}
             {
-                transcriptions.length > 0 &&
+                (transcriptions.length > 0) &&
+                <>
                 <div className='min-h-[200px] min-w-[596px] w-[900px] h-60 overflow-y-auto cursor-default p-6 border flex flex-wrap'>
                     {transcriptions.map((t, index) => {
                         const audioSe = audioSegments2[index]; // Acessa o objeto original com base no índice
@@ -247,26 +247,36 @@ export default function AudioUploader() {
                         );
                     })}
                 </div>
+                {(actualSegmentTranscribing == audioSegments.length - 1) &&
+                <div className='flex flex-row gap-2 pt-4'>
 
+                    <Button onClick={openModal} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Editar Texto</Button>
+                    <Button onClick={handlePDF} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Gerar PDF</Button>
 
+                </div>
+                }
+                </>
             }
-            <div>
                   {isModalOpen && (
+                  <>
+                    <div className="overlay"></div>
                     <div className="modal">
-                      <div className="modal-content">
-                        <span className="close" onClick={closeModal}>&times;</span>
-                        <h2>Editor de Texto</h2>
+                      <div className="flex">
+                        <Button onClick={closeModal}>Fechar</Button>
                         <textarea
-                          rows="4"
-                          cols="50"
+                          rows="10"
+                          cols="100"
                           value={text}
                           onChange={(e) => setText(e.target.value)}
-                        ></textarea><br />
+                         ></textarea><br />
+
                         <Button onClick={handlePDF}>Gerar PDF</Button>
+
+
                       </div>
-                    </div>
+                   </div>
+                    </>
                   )}
-            </div>
         </>
     )
     function formatSecondsToMinutesAndSeconds(totalSeconds: number) {
