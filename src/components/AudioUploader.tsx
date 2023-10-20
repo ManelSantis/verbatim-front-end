@@ -4,9 +4,10 @@ import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import VerbatimLogo from "../img/LogoVerbatim.svg";
 
-import api from '../services/api';
-import jsPDF from 'jspdf';
 import { Button } from 'antd';
+import jsPDF from 'jspdf';
+import React from 'react';
+import api from '../services/api';
 type TranscribeResp = {
     message: string
 };
@@ -15,6 +16,9 @@ interface AudioSlice {
     "time": number
 }
 export default function AudioUploader() {
+
+    
+    let audioRef = React.createRef();
 
     const [audioSegments, setAudioSegments] = useState<AudioBuffer[]>([]);
     const [audioSegments2, setAudioSegments2] = useState<AudioSlice[]>([]);
@@ -104,8 +108,15 @@ export default function AudioUploader() {
 
     const handleAudioInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
+        const audioElement = audioRef.current;
 
         if (file) {
+
+            audioElement.src = URL.createObjectURL(file);
+            audioElement.load(); // Recarrega o elemento para carregar o novo arquivo
+            audioElement.play();
+
+            
             const audioContext = new AudioContext();
 
             // Lê o arquivo de entrada como um ArrayBuffer
@@ -217,15 +228,17 @@ export default function AudioUploader() {
             <div>
 
                 <div className="text-center pt-2 mb-4 rounded-full w-[175px] h-[38px] bg-[#8d3726] cursor-pointer">
-                    <input id="fileInput" type="file" accept="audio/*" onChange={handleAudioInputChange} />
-                    <label htmlFor="fileInput" className=" text-white cursor-pointer"> Add new podcast </label>
+                    <input id="audioInput" type="file" accept="audio/*" onChange={handleAudioInputChange} />
+                    <label htmlFor="audioInput" className=" text-white cursor-pointer"> Add new podcast </label>
                 </div>
             </div>
-            {audioSegments2.length}
+
+            <audio className="mb-1" ref={audioRef} controls id="audioPlayer"></audio>
+            
             <div className='flex flex-row gap-2 pt-4'>
-                <button onClick={handleTranscribe} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</button>
-                <Button onClick={handlePDF}>Gerar PDF</Button>
-                <Button onClick={openModal}>Editar Texto</Button>
+                <Button onClick={handleTranscribe} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</Button>
+                <Button onClick={handlePDF} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Gerar PDF</Button>
+                <Button onClick={openModal} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Editar Texto</Button>
             </div>
             {isTranscribing ?
                 <TranscribeProgress /> : <p></p>}
