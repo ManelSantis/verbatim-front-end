@@ -6,6 +6,7 @@ import jsPDF from 'jspdf';
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
 import '../styles/modal.css';
+import Logo from "../img/Logo.jpg"
 type TranscribeResp = {
     message: string
 };
@@ -273,7 +274,7 @@ export default function AudioUploader() {
                             <div className="overlay"></div>
                             <div className="modal">
                                 <div className="flex">
-                                    <Button onClick={closeModal}>Fechar</Button>
+                                    <Button className="botao-close" onClick={closeModal}>Fechar</Button>
                                     <textarea
                                         rows="10"
                                         cols="100"
@@ -281,7 +282,7 @@ export default function AudioUploader() {
                                         onChange={(e) => setText(e.target.value)}
                                     ></textarea><br />
 
-                                    <Button onClick={handlePDF}>Gerar PDF</Button>
+                                    <button className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out' onClick={handlePDF}>Gerar PDF</button>
                                 </div>
                             </div>
                         </>
