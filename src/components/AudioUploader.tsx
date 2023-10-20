@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import AudioPlayer from './AudioPlayer';
+import EditableText from './EditableText.tsx'
 import Cookies from 'js-cookie'
 import toWav from 'audiobuffer-to-wav';
 import api from '../services/api';
@@ -28,6 +29,19 @@ export default function AudioUploader() {
         console.log(token)
     }, [])
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+      const [text, setText] = useState('');
+
+      const openModal = () => {
+        setIsModalOpen(true);
+        setText(transcriptions.join(' '));
+      }
+
+      const closeModal = () => {
+        setIsModalOpen(false);
+        setText('');
+      }
+
     const handlePDF = () => {
             const x = 10; // Posição horizontal
             let y = 20; // Posição vertical inicial
@@ -36,12 +50,13 @@ export default function AudioUploader() {
             doc.setFont("times");
             doc.setFontSize(14);
 
-            const joinedString = transcriptions.join(' ');
+            const joinedString = (text == '') ? transcriptions.join(' ') : text;
 
             const larguraDisponivel = 190; // Largura disponível em milímetros
 
             const linhas = doc.splitTextToSize(joinedString, larguraDisponivel);
             linhas.forEach((linha) => {
+              //doc.addImage('/Logo.jpg', 'JPEG', 10, 10, 50, 50);
               doc.text(linha, x, y);
               y += 8; // Ajuste conforme necessário para espaçamento entre as linhas
               if(y > maxY){
@@ -209,6 +224,7 @@ export default function AudioUploader() {
             {audioSegments2.length}
             <Button onClick={handleTranscribe}>Transcrever</Button>
             <Button onClick={handlePDF}>Gerar PDF</Button>
+            <Button onClick={openModal}>Editar Texto</Button>
             {isTranscribing ?
                 <TranscribeProgress /> : <p></p>}
             {
@@ -247,6 +263,23 @@ export default function AudioUploader() {
 
 
             }
+            <div>
+                  {isModalOpen && (
+                    <div className="modal">
+                      <div className="modal-content">
+                        <span className="close" onClick={closeModal}>&times;</span>
+                        <h2>Editor de Texto</h2>
+                        <textarea
+                          rows="4"
+                          cols="50"
+                          value={text}
+                          onChange={(e) => setText(e.target.value)}
+                        ></textarea><br />
+                        <Button onClick={handlePDF}>Gerar PDF</Button>
+                      </div>
+                    </div>
+                  )}
+            </div>
         </>
     )
     function formatSecondsToMinutesAndSeconds(totalSeconds: number) {
