@@ -31,50 +31,50 @@ export default function AudioUploader() {
     }, [])
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-      const [text, setText] = useState('');
+    const [text, setText] = useState('');
 
-      const openModal = () => {
+    const openModal = () => {
         setIsModalOpen(true);
         setText(transcriptions.join(' '));
-      }
+    }
 
-      const closeModal = () => {
+    const closeModal = () => {
         setIsModalOpen(false);
         setText('');
-      }
+    }
 
     const handlePDF = () => {
-            const x = 10; // Posição horizontal
-            let y = 20; // Posição vertical inicial
-            const maxY = 280;
-            const doc = new jsPDF();
-            doc.setFont("times");
-            doc.setFontSize(14);
+        const x = 10; // Posição horizontal
+        let y = 20; // Posição vertical inicial
+        const maxY = 280;
+        const doc = new jsPDF();
+        doc.setFont("times");
+        doc.setFontSize(14);
 
-            const joinedString = (text == '') ? transcriptions.join(' ') : text;
+        const joinedString = (text == '') ? transcriptions.join(' ') : text;
 
-            const larguraDisponivel = 190; // Largura disponível em milímetros
+        const larguraDisponivel = 190; // Largura disponível em milímetros
 
-            const linhas = doc.splitTextToSize(joinedString, larguraDisponivel);
-            linhas.forEach((linha) => {
-              //doc.addImage('/Logo.jpg', 'JPEG', 10, 10, 50, 50);
-              doc.text(linha, x, y);
-              y += 8; // Ajuste conforme necessário para espaçamento entre as linhas
-              if(y > maxY){
+        const linhas = doc.splitTextToSize(joinedString, larguraDisponivel);
+        linhas.forEach((linha) => {
+            //doc.addImage('/Logo.jpg', 'JPEG', 10, 10, 50, 50);
+            doc.text(linha, x, y);
+            y += 8; // Ajuste conforme necessário para espaçamento entre as linhas
+            if (y > maxY) {
                 doc.addPage();
                 y = 20;
-               }
-            });
+            }
+        });
 
-            doc.save('texto.pdf');
-     };
+        doc.save('texto.pdf');
+    };
 
 
     const handleTranscribe = async () => {
         setTranscriptions([]);
         setText('');
         setIstranscribing(true);
-        
+
         // for (const buffer of audioSegments2) {
         for (const [index, buffer] of audioSegments2.entries()) {
             setActualSegmentTranscribing(index);
@@ -121,7 +121,7 @@ export default function AudioUploader() {
             audioElement.load(); // Recarrega o elemento para carregar o novo arquivo
             audioElement.play();
 
-            
+
             const audioContext = new AudioContext();
 
             // Lê o arquivo de entrada como um ArrayBuffer
@@ -216,85 +216,87 @@ export default function AudioUploader() {
     };
     const TranscribeProgress = () => {
         return <div>
-            
+
             <div className='w-96'>
-            Transcribing {actualSegmentTranscribing} out of {audioSegments2.length}
+                Transcribing {actualSegmentTranscribing} out of {audioSegments2.length}
                 <LinearProgress variant='determinate' value={(actualSegmentTranscribing / audioSegments2.length) * 100} />
             </div>
         </div>
     }
     return (
         <>
-        <div className="w-full h-full flex flex-col items-center justify-center overflow-y-auto ">
-
-            <div className="h-[250px]  w-[250px] flex flex-col items-center justify-center" >
-                <img src={VerbatimLogo} className="h-[250px] w-[250px] pb-8"></img>
-            </div>
-
-            <div>
-                <div className="text-center pt-1 mb-4 rounded-full w-[175px] h-[30px] bg-[#8d3726] cursor-pointer">
-                    <input id="audioInput" type="file" accept="audio/*" onChange={handleAudioInputChange} />
-                    <label htmlFor="audioInput" className=" text-white cursor-pointer"> Add new podcast </label>
+            <div className="w-screen h-screen flex flex-col items-center justify-center ">
+                <div className="h-[250px]  w-[250px] flex flex-col items-center justify-center" >
+                    <img src={VerbatimLogo} className="h-[250px] w-[250px] pb-8"></img>
                 </div>
-            </div>
+                <div className="w-full h-full flex flex-col items-center justify-center overflow-y-auto ">
 
-            <audio className="mb-1" ref={audioRef} controls id="audioPlayer"></audio>
-            
-            <div className='flex flex-row gap-2 pt-4'>
-                <button onClick={handleTranscribe} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</button>
-            </div>
-            
-            {isTranscribing ?
-                <TranscribeProgress /> : <p></p>}
-            {
-                (transcriptions.length > 0) &&
-                <>
-                <div className='mt-4 min-h-[200px] min-w-[596px] w-[350px] h-[90px] overflow-y-auto cursor-default p-6 border flex flex-wrap'>
-                    {transcriptions.map((t, index) => {
-                        const audioSe = audioSegments2[index]; // Acessa o objeto original com base no índice
-                        return (
-                            <Tooltip key={index} title={formatSecondsToMinutesAndSeconds(audioSe.time)} placement='top'>
-                                <div className='rounded-2xl mx-1 h-auto hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1 transition ease-in-out'>
-                                    {" " + t}
 
-                                    {/* <div>
+
+                    <div>
+                        <div className="text-center pt-1 mb-4 rounded-full w-[175px] h-[30px] bg-[#8d3726] cursor-pointer">
+                            <input id="audioInput" type="file" accept="audio/*" onChange={handleAudioInputChange} />
+                            <label htmlFor="audioInput" className=" text-white cursor-pointer"> Add new podcast </label>
+                        </div>
+                    </div>
+
+                    <audio className="mb-1" ref={audioRef} controls id="audioPlayer"></audio>
+
+                    <div className='flex flex-row gap-2 pt-4'>
+                        <button onClick={handleTranscribe} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</button>
+                    </div>
+
+                    {isTranscribing ?
+                        <TranscribeProgress /> : <p></p>}
+                    {
+                        (transcriptions.length > 0) &&
+                        <>
+                            <div className='mt-4 min-h-[200px] min-w-[596px] w-[350px] h-[90px] overflow-y-auto cursor-default p-6 border flex flex-wrap'>
+                                {transcriptions.map((t, index) => {
+                                    const audioSe = audioSegments2[index]; // Acessa o objeto original com base no índice
+                                    return (
+                                        <Tooltip key={index} title={formatSecondsToMinutesAndSeconds(audioSe.time)} placement='top'>
+                                            <div className='rounded-2xl mx-1 h-auto hover:bg-blue-400 hover:text-white hover:font-semibold hover:px-1 transition ease-in-out'>
+                                                {" " + t}
+
+                                                {/* <div>
                                         Tempo: {audioSe.time.toString()}
                                     </div> */}
+                                            </div>
+                                        </Tooltip>
+                                    );
+                                })}
+                            </div>
+                            {(actualSegmentTranscribing == audioSegments.length - 1) &&
+                                <div className='flex flex-row gap-2 pt-4'>
+
+                                    <button onClick={openModal} className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Editar Texto</button>
+                                    <button onClick={handlePDF} className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Gerar PDF</button>
+
                                 </div>
-                            </Tooltip>
-                        );
-                    })}
+                            }
+                        </>
+                    }
+                    {isModalOpen && (
+                        <>
+                            <div className="overlay"></div>
+                            <div className="modal">
+                                <div className="flex">
+                                    <Button onClick={closeModal}>Fechar</Button>
+                                    <textarea
+                                        rows="10"
+                                        cols="100"
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                    ></textarea><br />
+
+                                    <Button onClick={handlePDF}>Gerar PDF</Button>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
-                {(actualSegmentTranscribing == audioSegments.length - 1) &&
-                <div className='flex flex-row gap-2 pt-4'>
-
-                    <button onClick={openModal} className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Editar Texto</button>
-                    <button onClick={handlePDF} className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Gerar PDF</button>
-
-                </div>
-                }
-                </>
-            }
-                  {isModalOpen && (
-                  <>
-                    <div className="overlay"></div>
-                    <div className="modal">
-                      <div className="flex">
-                        <Button onClick={closeModal}>Fechar</Button>
-                        <textarea
-                          rows="10"
-                          cols="100"
-                          value={text}
-                          onChange={(e) => setText(e.target.value)}
-                         ></textarea><br />
-
-                        <Button onClick={handlePDF}>Gerar PDF</Button>
-                      </div>
-                   </div>
-                    </>
-                  )}
-        
-        </div>
+            </div>
         </>
     )
     function formatSecondsToMinutesAndSeconds(totalSeconds: number) {
