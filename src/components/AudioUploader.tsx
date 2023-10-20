@@ -45,7 +45,8 @@ export default function AudioUploader() {
 
     const handlePDF = () => {
         const x = 10; // Posição horizontal
-        let y = 20; // Posição vertical inicial
+        let y = 25; // Posição vertical inicial
+        let count = 1;
         const maxY = 280;
         const doc = new jsPDF();
         doc.setFont("times");
@@ -53,19 +54,21 @@ export default function AudioUploader() {
 
         const joinedString = (text == '') ? transcriptions.join(' ') : text;
 
-        const larguraDisponivel = 190; // Largura disponível em milímetros
+        const larguraDisponivel = 185; // Largura disponível em milímetros
 
         const linhas = doc.splitTextToSize(joinedString, larguraDisponivel);
         linhas.forEach((linha) => {
-            //doc.addImage('/Logo.jpg', 'JPEG', 10, 10, 50, 50);
+            doc.addImage(Logo, 'JPEG', 100, 3, 15, 15);
             doc.text(linha, x, y);
             y += 8; // Ajuste conforme necessário para espaçamento entre as linhas
             if (y > maxY) {
+                doc.text(count.toString(), 200, 290);
+                count++;
                 doc.addPage();
-                y = 20;
+                y = 25;
             }
         });
-
+        doc.text(count.toString(), 200, 290);
         doc.save('texto.pdf');
     };
 
@@ -262,8 +265,8 @@ export default function AudioUploader() {
                             {(actualSegmentTranscribing == audioSegments.length - 1) &&
                                 <div className='flex flex-row gap-2 pt-4'>
 
-                                    <button onClick={openModal} className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Editar Texto</button>
-                                    <button onClick={handlePDF} className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Gerar PDF</button>
+                                    <button onClick={openModal} className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Edit</button>
+                                    <button onClick={handlePDF} className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Generate PDF</button>
 
                                 </div>
                             }
@@ -274,7 +277,7 @@ export default function AudioUploader() {
                             <div className="overlay"></div>
                             <div className="modal">
                                 <div className="flex">
-                                    <Button className="botao-close" onClick={closeModal}>Fechar</Button>
+                                    <button className="botao-close" onClick={closeModal}>X</button>
                                     <textarea
                                         rows="10"
                                         cols="100"
@@ -282,7 +285,7 @@ export default function AudioUploader() {
                                         onChange={(e) => setText(e.target.value)}
                                     ></textarea><br />
 
-                                    <button className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out' onClick={handlePDF}>Gerar PDF</button>
+                                    <button className='w-[150px] h-10 mb-4 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out' onClick={handlePDF}>Generate PDF</button>
                                 </div>
                             </div>
                         </>
