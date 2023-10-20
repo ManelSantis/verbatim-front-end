@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { ChangeEvent, useEffect, useState } from 'react';
 import AudioUploader from '../../components/AudioUploader';
 import SideBar from '../../components/SideBar';
+import VerbatimLogo from "../../img/LogoVerbatim.svg";
 import { uploadData } from '../../utils/firebase';
+
 
 
 interface User {
@@ -83,6 +85,8 @@ export function Audios() {
             <div className="w-full p-6 h-s">
                 <div className="h-full w-full rounded-xl shadow-lg flex flex-col justify-center items-center gap-4 bg-white">
                     <div className="w-full h-full pt-2 flex flex-col items-center justify-center">
+                        <img src={VerbatimLogo} className="h-[200px] w-[200px] pb-2"></img>
+
                         <AudioUploader />
                     </div>
                 </div>

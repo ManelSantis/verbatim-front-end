@@ -4,7 +4,6 @@ import toWav from 'audiobuffer-to-wav';
 import Cookies from 'js-cookie';
 import jsPDF from 'jspdf';
 import React, { useEffect, useState } from 'react';
-import VerbatimLogo from "../img/LogoVerbatim.svg";
 import api from '../services/api';
 import '../styles/modal.css';
 type TranscribeResp = {
@@ -225,14 +224,6 @@ export default function AudioUploader() {
     }
     return (
         <>
-            <div className="w-screen h-screen flex flex-col items-center justify-center ">
-                <div className="h-[250px]  w-[250px] flex flex-col items-center justify-center" >
-                    <img src={VerbatimLogo} className="h-[250px] w-[250px] pb-8"></img>
-                </div>
-                <div className="w-full h-full flex flex-col items-center justify-center overflow-y-auto ">
-
-
-
                     <div>
                         <div className="text-center pt-1 mb-4 rounded-full w-[175px] h-[30px] bg-[#8d3726] cursor-pointer">
                             <input id="audioInput" type="file" accept="audio/*" onChange={handleAudioInputChange} />
@@ -295,8 +286,6 @@ export default function AudioUploader() {
                             </div>
                         </>
                     )}
-                </div>
-            </div>
         </>
     )
     function formatSecondsToMinutesAndSeconds(totalSeconds: number) {
