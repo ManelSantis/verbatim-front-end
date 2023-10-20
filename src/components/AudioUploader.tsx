@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import VerbatimLogo from "../img/LogoVerbatim.svg";
 
 import api from '../services/api';
+import jsPDF from 'jspdf';
+import { Button } from 'antd';
 type TranscribeResp = {
     message: string
 };
@@ -26,6 +28,46 @@ export default function AudioUploader() {
         setToken(t)
         console.log(token)
     }, [])
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+      const [text, setText] = useState('');
+
+      const openModal = () => {
+        setIsModalOpen(true);
+        setText(transcriptions.join(' '));
+      }
+
+      const closeModal = () => {
+        setIsModalOpen(false);
+        setText('');
+      }
+
+    const handlePDF = () => {
+            const x = 10; // Posição horizontal
+            let y = 20; // Posição vertical inicial
+            const maxY = 280;
+            const doc = new jsPDF();
+            doc.setFont("times");
+            doc.setFontSize(14);
+
+            const joinedString = (text == '') ? transcriptions.join(' ') : text;
+
+            const larguraDisponivel = 190; // Largura disponível em milímetros
+
+            const linhas = doc.splitTextToSize(joinedString, larguraDisponivel);
+            linhas.forEach((linha) => {
+              //doc.addImage('/Logo.jpg', 'JPEG', 10, 10, 50, 50);
+              doc.text(linha, x, y);
+              y += 8; // Ajuste conforme necessário para espaçamento entre as linhas
+              if(y > maxY){
+                doc.addPage();
+                y = 20;
+               }
+            });
+
+            doc.save('texto.pdf');
+     };
+
 
     const handleTranscribe = async () => {
         setTranscriptions([])
@@ -182,6 +224,8 @@ export default function AudioUploader() {
             {audioSegments2.length}
             <div className='flex flex-row gap-2 pt-4'>
                 <button onClick={handleTranscribe} className='w-[150px] h-10 rounded-full text-white bg-[#B84831] shadow-md hover:bg-[#d85136] transition ease-in-out'>Transcribe</button>
+                <Button onClick={handlePDF}>Gerar PDF</Button>
+                <Button onClick={openModal}>Editar Texto</Button>
             </div>
             {isTranscribing ?
                 <TranscribeProgress /> : <p></p>}
@@ -203,10 +247,28 @@ export default function AudioUploader() {
                         );
                     })}
                 </div>
+
+
             }
+            <div>
+                  {isModalOpen && (
+                    <div className="modal">
+                      <div className="modal-content">
+                        <span className="close" onClick={closeModal}>&times;</span>
+                        <h2>Editor de Texto</h2>
+                        <textarea
+                          rows="4"
+                          cols="50"
+                          value={text}
+                          onChange={(e) => setText(e.target.value)}
+                        ></textarea><br />
+                        <Button onClick={handlePDF}>Gerar PDF</Button>
+                      </div>
+                    </div>
+                  )}
+            </div>
         </>
     )
-
     function formatSecondsToMinutesAndSeconds(totalSeconds: number) {
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
